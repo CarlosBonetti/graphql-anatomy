@@ -1,0 +1,28 @@
+type Query {
+    me: Person
+}
+
+type Person {
+    id: ID!
+    name: String!
+    profilePicture: Image
+    cities(first: Int = 10): [City]
+}
+
+type Image {
+    url: String!
+    width: Int
+    height: Int
+}
+
+type City {
+    id: ID!
+    name: String!
+    uf: UF
+}
+
+type UF {
+    id: ID!
+    name: String!
+    abbreviation: String!
+}
