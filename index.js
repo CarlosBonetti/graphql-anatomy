@@ -1,30 +1,17 @@
 import { GraphQLServer } from 'graphql-yoga'
+import { getCurrentUser, getCityUf, getUserCities } from './service';
 
 const resolvers = {
     Query: {
-        me: () => ({
-            id: 1,
-            name: 'Carlos Bonetti',
-            profilePicture: {
-                url: 'https://cdn/bonetti.jpg',
-                width: 200,
-                height: 200,
-            },
-        }),
+        me: () => getCurrentUser(),
     },
     Person: {
-        cities: (_, { first }) => ([
-            { id: 1, name: 'Videira' },
-            { id: 2, name: 'Florianópolis' },
-            { id: 3, name: 'Itajaí' },
-        ].slice(0, first))
+        cities: async (person, { first }) => {
+            return await getUserCities(person, { first })
+        }
     },
     City: {
-        uf: () => ({
-            id: 1,
-            name: 'Santa Catarina',
-            abbreviation: 'SC'
-        })
+        uf: (city) => getCityUf(city)
     }
 }
 
